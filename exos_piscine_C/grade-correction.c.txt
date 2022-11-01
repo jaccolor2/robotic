@@ -1,0 +1,57 @@
+The function will be tested with the following values: ‘A’, ‘B’, ‘C’, ‘D’, ‘E’, ‘F’, ‘a’, ‘b’, ‘c’, ‘d’,
+‘e’, ‘f’, ‘g’, ‘h’, ‘i’, ‘j’, ‘k’.
+
+
+
+#include <assert.h>
+#include <errno.h>
+#include <err.h>
+#include <stddef.h>
+#include <stdio.h>
+
+void grade(char g) {
+  switch (g) {
+    case 'A':
+      puts("Excellent");
+      break;
+    case 'B':
+      puts("Good");
+      break;
+    case 'C':
+      puts("Not so bad");
+      break;
+    case 'D':
+      puts("Could be worse");
+      break;
+    case 'E':
+      puts("Maybe next time");
+      break;
+    case 'F':
+      puts("No comment");
+      break;
+    default:
+      puts("Call a wild ACU");
+      break;
+  }
+}
+
+int main(int argc, char** argv) {
+  grade('A');
+  grade('B');
+  grade('C');
+  grade('D');
+  grade('E');
+  grade('F');
+  grade('a');
+  grade('b');
+  grade('c');
+  grade('d');
+  grade('e');
+  grade('f');
+  grade('g');
+  grade('h');
+  grade('i');
+  grade('j');
+  grade('k');
+  return 0;
+}
