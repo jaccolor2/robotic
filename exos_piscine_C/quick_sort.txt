@@ -1,0 +1,33 @@
+#include <stddef.h> 
+#include <assert.h> 
+#include <err.h> 
+#include <errno.h>
+
+ 
+void quicksort(int *tab, int len) 
+{ 
+if (len < 2) 
+	return; 
+int pivot = tab[len / 2];
+int *left = tab; 
+int *right = tab + len - 1; 
+while (left <= right) 
+{ 
+if (*left < pivot) 
+{ 
+	left++; continue; 
+} 
+if (*right > pivot) 
+{
+ right--; 
+continue; 
+} 
+int tmp = *left; 
+*left = *right; 
+*left++; 
+*right = tmp; 
+right--; 
+} 
+quicksort(tab, right - tab + 1); 
+quicksort(left, tab + len - left); 
+}

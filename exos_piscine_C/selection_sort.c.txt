@@ -1,0 +1,26 @@
+unsigned array_min(const int arr[], unsigned start, unsigned size)
+{
+    assert(arr);
+
+    unsigned min = start;
+    for (unsigned i = start + 1; i < size; i++) {
+        if (arr[i] < arr[min]) {
+            min = i;
+        }
+    }
+    return min;
+}
+
+void selection_sort(int arr[], unsigned size)
+{
+    assert(arr);
+
+    for (unsigned i = 0; i < size - 1; i++) {
+        unsigned min = array_min(arr, i, size);
+        if (min != i) {
+            int tmp = arr[i];
+            arr[i] = arr[min];
+            arr[min] = tmp;
+        }
+    }
+}

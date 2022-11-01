@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <string.h>
+
+#define READ_SIZE 1024
+
+int main(int argc, char **argv) {
+    char buf[READ_SIZE];
+    int fd = open(argv[1], O_RDONLY);
+    int fd_out = open(argv[2], O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
+
+    if (fd < 0 || fd_out < 0) {
+        perror("open");
+        exit(1);
+    }
+
+    while (read(fd, buf, READ_SIZE)) {
+        int size = strlen(buf);
+        int end = size - 1;
+
+        while (buf[end] == ' ' || buf[end] == '\t') {
+            --end;
+        }
+
+        if (end < size - 1) {
+            buf[end + 1] = '\n';
+            buf[end + 2] = '\0';
+        }
+
+        write(fd_out, buf, strlen(buf));
+    }
+
+    close(fd);
+    close(fd_out);
+
+    return 0;
+}

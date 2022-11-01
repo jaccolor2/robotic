@@ -1,0 +1,37 @@
+#include <stddef.h>
+#include <assert.h>
+#include <errno.h>
+#include <err.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+void sieve(int n) {
+  if (n <= 2)
+    return;
+
+  char *arr = calloc(n - 1, sizeof(char));
+  assert(arr != NULL);
+
+  int count = 1;
+  for (int i = 3; i < n; i += 2) {
+    if (arr[i - 2])
+      continue;
+    count++;
+    for (int j = i * i; j < n; j += i * 2)
+      arr[j - 2] = 1;
+  }
+  free(arr);
+  printf("%d\n", count);
+}
+
+int main(int argc, char **argv) {
+  if (argc != 2)
+    errx(1, "usage: ./sieve n");
+
+  char *ptr;
+  long n = strtol(argv[1], &ptr, 10);
+  if (n <= 0 || *ptr != '\0')
+    errx(2, "Invalid number");
+
+  sieve(n);
+}

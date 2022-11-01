@@ -1,0 +1,56 @@
+
+#include <stdlib.h>
+#include <string.h>
+#include <stddef.h>
+#include <errno.h>
+#include <err.h>
+#include <assert.h>
+
+char *rle_encode(const char *s)
+{
+	size_t len = strlen(s);
+	char *ret = malloc((len * 2) + 1); // worst case
+	if (ret == NULL)
+		return NULL;
+
+	size_t j = 0;
+	for (size_t i = 0; i < len; i++) {
+		size_t count = 1;
+		while (i + 1 < len && s[i] == s[i + 1]) {
+			i++;
+			count++;
+		}
+		if (count == 1) {
+			ret[j++] = s[i];
+		} else {
+			ret[j++] = '0' + count;
+			ret[j++] = s[i];
+		}
+	}
+	ret[j] = '\0';
+	return ret;
+}
+
+char *rle_decode(const char *s)
+{
+	size_t len = strlen(s);
+	char *ret = malloc(len + 1); // worst case
+	if (ret == NULL)
+		return NULL;
+
+	size_t j = 0;
+	for (size_t i = 0; i < len; i++) {
+		size_t count = s[i] - '0';
+		if (count == 0 || count > 9) {
+			ret[j++] = s[i];
+		} else {
+			assert(i + 1 < len);
+			char c = s[++i];
+			for (size_t k = 0; k < count; k++) {
+				ret[j++] = c;
+			}
+		}
+	}
+	ret[j] = '\0';
+	return ret;
+}

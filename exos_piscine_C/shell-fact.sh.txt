@@ -1,0 +1,24 @@
+#!/bin/bash
+
+if [[ $# -eq 0 ]]
+then
+    echo "Usage: fact.sh NUMBER"
+    exit 1
+fi
+
+number=$1
+
+if [[ ! $number =~ ^[0-9]+$ ]]
+then
+    echo "Error: Argument must be a positive integer"
+    exit 1
+fi
+
+factorial=1
+
+for ((i=2;i<=number;i++))
+do
+    factorial=$((factorial * i))
+done
+
+echo $factorial
